@@ -29,7 +29,7 @@ struct NewTransactionSheet: View {
     @State var newTransaction = Transaction(name: "", people: [Person(name: "", money: 0, dueDate: Date.now)], transactionType: .unselected)
     @Binding var transactions: [Transaction]
     
-    @State private var numberOfPeople = 1
+    @State private var numberOfPeople = 0
     @State var hasOtherPeople = false
     @State private var refreshScreen = false
     
@@ -63,6 +63,7 @@ struct NewTransactionSheet: View {
                         }
                         HStack {
                             Text("Amount of money")
+                            TextField("Amount", value: $newTransaction.people[0].money, formatter: NumberFormatter())
                             TextField("Amount", value: $newTransaction.people[0].money, formatter: NumberFormatter())
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.trailing)
@@ -106,7 +107,7 @@ struct NewTransactionSheet: View {
                                     withAnimation{
                                         numberOfPeople -= 1
                                     }
-                                    if numberOfPeople < 2 {
+                                    if numberOfPeople <= 1 {
                                         hasOtherPeople = false
                                     }
                                     newTransaction.people.remove(at: newTransaction.people.count - 1)

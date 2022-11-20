@@ -40,7 +40,7 @@ struct HomeView: View {
                                     }
                                 }
                                 Spacer()
-                                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                Text("$" + String(format: "%.2f", transaction.totalMoney()))
                                     .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
                             }
                         }
@@ -61,7 +61,7 @@ struct HomeView: View {
                                     }
                                 }
                                 Spacer()
-                                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                Text("$" + String(format: "%.2f", transaction.totalMoney()))
                                     .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
                             }
                         }
@@ -82,7 +82,7 @@ struct HomeView: View {
                                     }
                                 }
                                 Spacer()
-                                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                Text("$" + String(format: "%.2f", transaction.totalMoney()))
                                     .foregroundColor(transaction.transactionStatus == .overdue ? .red : .black)
                             }
                         }
@@ -102,7 +102,7 @@ struct HomeView: View {
                                     }
                                 }
                                 Spacer()
-                                Text("$" + String(format: "%.2f", transaction.totalMoney))
+                                Text("$" + String(format: "%.2f", transaction.totalMoney()))
                             }
                             .foregroundColor(.gray)
                         }
