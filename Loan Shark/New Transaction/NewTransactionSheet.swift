@@ -43,6 +43,7 @@ struct NewTransactionSheet: View {
     
     @State var name = ""
     @State var people: [Person] = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
+    @State var enableNotifs = false
     
     @Binding var transactions: [Transaction]
     
@@ -64,6 +65,13 @@ struct NewTransactionSheet: View {
                             }
                         }
                         .foregroundColor(Color("PrimaryTextColor"))
+                    }
+                    Section {
+                        Toggle(isOn: $enableNotifs ) {
+                            Text("Enable notifications")
+                        }
+                    } footer: {
+                        Text("Enable this to allow Money Rush to automatically send you notifications to remind youcollect your money back")
                     }
                     
                     if transactionType == "Bill split" {
@@ -275,6 +283,12 @@ struct NewTransactionSheet: View {
                                                   people: people.filter({
                         $0.contact != nil
                     }), transactionType: transactionTypeItem)
+                    
+                    if enableNotifs == true {
+                        transaction.isNotificationEnabled = true
+                    } else if enableNotifs == false {
+                        transaction.isNotificationEnabled = false
+                    }
                     
                     transactions.append(transaction)
 
