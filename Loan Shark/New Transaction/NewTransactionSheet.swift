@@ -127,7 +127,7 @@ struct NewTransactionSheet: View {
                             people[0].dueDate = newValue
                         }
                         
-                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
+                        DatePicker("Due by", selection: bindingDate, displayedComponents: .date)
                             .foregroundColor(Color("PrimaryTextColor"))
                         
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
@@ -169,7 +169,7 @@ struct NewTransactionSheet: View {
                                         person.dueDate = newValue
                                     }
                                     
-                                    DatePicker("Due by", selection: BindingDate, in: Date.now..., displayedComponents: .date)
+                                    DatePicker("Due by", selection: BindingDate, displayedComponents: .date)
                                         .foregroundColor(Color("PrimaryTextColor"))
                                 }
                             }
@@ -265,7 +265,7 @@ struct NewTransactionSheet: View {
                         } set: { newValue in
                             people[0].dueDate = newValue
                         }
-                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
+                        DatePicker("Due by", selection: bindingDate, displayedComponents: .date)
                             .foregroundColor(Color("PrimaryTextColor"))
                     }
                 }

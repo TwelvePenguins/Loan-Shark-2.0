@@ -71,7 +71,7 @@ struct TransactionDetailView: View {
                 Section("UNPAID") {
                     ForEach($transaction.people) { $person in
                         if !person.hasPaid {
-                            VStack{
+                            VStack {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(person.name ?? "No one Selected")
