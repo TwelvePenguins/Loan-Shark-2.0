@@ -23,8 +23,9 @@ struct NewTransactionSheet: View {
     @State var dueDate = Date()
     @State var money = 0.0
     @State var transactionType = "Select"
+    @Environment(\.dismiss) var dismiss
     
-    var sufficientPeople: Bool {
+    var insufficientPeople: Bool {
         if transactionType == "Bill split" {
             return people.filter({ $0.contact != nil }).count < 2
         } else if transactionType == "Loan "{
@@ -33,18 +34,16 @@ struct NewTransactionSheet: View {
             return false
         }
     }
-    
-    var fieldsUnfilled: Bool {
-        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1 || sufficientPeople
+    var blankMoney: Bool {
+        return !people.filter { $0.contact != nil }.allSatisfy { $0.money != nil }
     }
-    
+    var fieldsUnfilled: Bool {
+        name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1 || insufficientPeople || blankMoney
+    }
     var transactionTypes = ["Select", "Loan", "Bill split"]
-    @Environment(\.dismiss) var dismiss
-    
     @State var name = ""
     @State var people: [Person] = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
     @State var enableNotifs = false
-    
     @Binding var transactions: [Transaction]
     
     var body: some View {
@@ -71,7 +70,7 @@ struct NewTransactionSheet: View {
                             Text("Enable notifications")
                         }
                     } footer: {
-                        Text("Enable this to allow Money Rush to automatically send you notifications to remind youcollect your money back")
+                        Text("Enable this to allow Money Rush to automatically send you notifications to remind you to collect your money back.")
                     }
                     
                     if transactionType == "Bill split" {
@@ -286,12 +285,13 @@ struct NewTransactionSheet: View {
                     
                     if enableNotifs == true {
                         transaction.isNotificationEnabled = true
+                        addNotification(for: transaction)
                     } else if enableNotifs == false {
                         transaction.isNotificationEnabled = false
                     }
                     
                     transactions.append(transaction)
-
+                    
                     dismiss()
                 } label: {
                     Text("Save")
@@ -314,5 +314,11 @@ struct NewTransactionSheet: View {
             }
         }
     }
+    func manageNotification(for transaction: Transaction) {
+        if transaction.isNotificationEnabled == true {
+            addNotification(for: transaction)
+        } else if transaction.isNotificationEnabled == false {
+            try? removeNotification(for: transaction)
+        }
+    }
 }
-

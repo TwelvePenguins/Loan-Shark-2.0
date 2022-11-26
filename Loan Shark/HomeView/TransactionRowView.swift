@@ -11,6 +11,7 @@ struct TransactionRowView: View {
     
     @ObservedObject var manager: TransactionManager
     @Binding var transaction: Transaction
+    @State var reload = false
     
     var body: some View {
         NavigationLink {

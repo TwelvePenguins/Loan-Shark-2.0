@@ -33,7 +33,7 @@ struct EditTransactionView: View {
                             Text("Enable notifications")
                         }
                     } footer: {
-                        Text("Enable this to allow Money Rush to automatically send you notifications to remind youcollect your money back")
+                        Text("Enable this to allow Money Rush to automatically send you notifications to remind youcollect your money back.")
                     }
                     if transaction.transactionType == .loan {
                         Section {

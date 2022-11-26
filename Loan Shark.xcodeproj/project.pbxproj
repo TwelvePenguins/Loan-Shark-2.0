@@ -28,6 +28,8 @@
 		74BDE59728CD868E00D1DA25 /* Loan_SharkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE59628CD868E00D1DA25 /* Loan_SharkUITests.swift */; };
 		74BDE59928CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE59828CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift */; };
 		74DBC0522931BB2900588ABC /* StringMetric in Frameworks */ = {isa = PBXBuildFile; productRef = 74DBC0512931BB2900588ABC /* StringMetric */; };
+		74DBC0542932369400588ABC /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DBC0532932369400588ABC /* NotificationManager.swift */; };
+		74DBC0562932374200588ABC /* DecimalTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DBC0552932374200588ABC /* DecimalTextField.swift */; };
 		74F9B077292489D2008087E9 /* PeopleSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74F9B076292489D2008087E9 /* PeopleSelectorView.swift */; };
 		74FB4821290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
 		74FB4822290388CC00F23E32 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FB4820290388CC00F23E32 /* HomeView.swift */; };
@@ -75,6 +77,8 @@
 		74BDE59228CD868E00D1DA25 /* Loan SharkUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Loan SharkUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		74BDE59628CD868E00D1DA25 /* Loan_SharkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkUITests.swift; sourceTree = "<group>"; };
 		74BDE59828CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loan_SharkUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		74DBC0532932369400588ABC /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		74DBC0552932374200588ABC /* DecimalTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecimalTextField.swift; sourceTree = "<group>"; };
 		74F9B076292489D2008087E9 /* PeopleSelectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleSelectorView.swift; sourceTree = "<group>"; };
 		74FB4820290388CC00F23E32 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		74FB48282903892200F23E32 /* Loan Shark.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Loan Shark.swift"; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 		55EFC5FE292BC650002F8A2D /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				74DBC0532932369400588ABC /* NotificationManager.swift */,
 				74FB48282903892200F23E32 /* Loan Shark.swift */,
 				09E16BC629160437003090BB /* TransactionManager.swift */,
 			);
@@ -139,6 +144,7 @@
 			isa = PBXGroup;
 			children = (
 				74FB4820290388CC00F23E32 /* HomeView.swift */,
+				74DBC0552932374200588ABC /* DecimalTextField.swift */,
 				55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */,
 			);
 			path = HomeView;
@@ -354,6 +360,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55EFC602292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift in Sources */,
+				74DBC0542932369400588ABC /* NotificationManager.swift in Sources */,
 				74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */,
 				55EFC5FB292A5503002F8A2D /* PersonTransactionRow.swift in Sources */,
 				7480867A29231A190091C8A9 /* TransactionDetailView.swift in Sources */,
@@ -365,6 +372,7 @@
 				55DBFA18291377FB008AFA32 /* NewTransactionSheet.swift in Sources */,
 				55EFC5F5292A0E3A002F8A2D /* MessagesView.swift in Sources */,
 				55EFC5FD292BC56C002F8A2D /* EditTransactionView.swift in Sources */,
+				74DBC0562932374200588ABC /* DecimalTextField.swift in Sources */,
 				74F9B077292489D2008087E9 /* PeopleSelectorView.swift in Sources */,
 				74FB48292903892200F23E32 /* Loan Shark.swift in Sources */,
 				55EFC5F9292A4080002F8A2D /* TransactionRowView.swift in Sources */,

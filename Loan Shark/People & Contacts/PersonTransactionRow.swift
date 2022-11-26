@@ -26,7 +26,7 @@ struct PersonTransactionRow: View {
         Button {
             showTransactionDetailSheet = true
         } label: {
-            HStack{
+            HStack {
                 VStack(alignment: .leading) {
                     Text(transaction.name)
                         .foregroundColor(Color("PrimaryTextColor"))

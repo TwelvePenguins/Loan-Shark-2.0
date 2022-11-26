@@ -25,6 +25,7 @@ struct TransactionDetailView: View {
                             transaction.isNotificationEnabled.toggle()
                             reload.toggle()
                             transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
+                            manageNotification(for: transaction)
                         } label: {
                             Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
                                 .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
@@ -40,6 +41,7 @@ struct TransactionDetailView: View {
                             transaction.isNotificationEnabled.toggle()
                             reload.toggle()
                             transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
+                            manageNotification(for: transaction)
                         } label: {
                             Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
                                 .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
@@ -55,6 +57,7 @@ struct TransactionDetailView: View {
                             transaction.isNotificationEnabled.toggle()
                             reload.toggle()
                             transaction.isNotificationEnabled ? removeNotification(for: transaction) : addNotification(for: transaction)
+                            manageNotification(for: transaction)
                         } label: {
                             Image(systemName: transaction.isNotificationEnabled ? "bell.fill" : "bell.slash")
                                 .foregroundColor(transaction.isNotificationEnabled ? Color("AccentColor")  :Color("AccentColor2"))
@@ -122,7 +125,7 @@ struct TransactionDetailView: View {
                 Section("PAID") {
                     ForEach($transaction.people) { $person in
                         if person.hasPaid {
-                            VStack{
+                            VStack {
                                 HStack {
                                     VStack(alignment: .leading) {
                                         Text(person.name ?? "No one Selected")
@@ -200,77 +203,11 @@ struct TransactionDetailView: View {
             }
         }
     }
-    func removeNotification(for transaction: Transaction) {
-        let center = UNUserNotificationCenter.current()
-        center.removePendingNotificationRequests(withIdentifiers: [transaction.id.uuidString])
-        print("HV: Notification is" + String(transaction.isNotificationEnabled))
-    }
-    
-    func addNotification(for transaction: Transaction) {
-        let center = UNUserNotificationCenter.current()
-        let sendNotification = transaction.isNotificationEnabled
-        let addRequest = {
-            let content = UNMutableNotificationContent()
-            var unpaidPeople: [Person]
-            var peopleWhoPaid: [Person]
-            var amountOfMoneyUnpaid: Double
-            var overdueTransactions: [Transaction]
-            if !transaction.isNotificationEnabled || transaction.transactionStatus != .overdue {
-                return
-            } else {
-                unpaidPeople = transaction.people.filter { $0.hasPaid == false }
-                peopleWhoPaid = transaction.people.filter{$0.hasPaid}
-                
-                func amountOfMoneyPaid() -> Double {
-                    var u = 0.0
-                    for i in peopleWhoPaid {
-                        u += i.money!
-                    }
-                    return u
-                }
-                amountOfMoneyUnpaid = transaction.totalMoney - amountOfMoneyPaid()
-                overdueTransactions = manager.allTransactions.filter {$0.transactionStatus == .overdue && $0.isNotificationEnabled}
-            }
-            if overdueTransactions.count == 0 {
-                return
-            }
-            else if overdueTransactions.count > 1 {
-                content.title = "Overdue transactions"
-                content.subtitle = "You have \(overdueTransactions.count) overdue transactions"
-            }
-            else if overdueTransactions.count == 1 && transaction.transactionType == .billSplitNoSync || transaction.transactionType == .billSplitSync {
-                content.title = "Overdue loans"
-                content.subtitle = "Remind \(unpaidPeople.map { $0.name! }.joined(separator: ", ")) to return you \(amountOfMoneyUnpaid)"
-            }
-            else if overdueTransactions.count == 1 && transaction.transactionType == .loan {
-                content.title = "Overdue loan"
-                content.subtitle = "Remind \(overdueTransactions[0].people[0].name ?? "") to return you $\(String(format: ".%2f", overdueTransactions[0].people[0].money!))"
-            }
-            content.sound = UNNotificationSound.default
-            
-            var dateComponents = DateComponents()
-            dateComponents.hour = 7
-            
-            //            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents , repeats: true)
-            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: true)
-            
-            let request = UNNotificationRequest(identifier: transaction.id.uuidString, content: content, trigger: trigger)
-            
-            center.add(request)
-        }
-        center.getNotificationSettings{ settings in
-            if settings.authorizationStatus == .authorized && sendNotification {
-                addRequest()
-            } else {
-                center.requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
-                    if success {
-                        addRequest()
-                        print("HV: Notification is" + String(transaction.isNotificationEnabled))
-                    } else {
-                        print("Skill issue")
-                    }
-                }
-            }
+    func manageNotification(for transaction: Transaction) {
+        if transaction.isNotificationEnabled == true {
+            addNotification(for: transaction)
+        } else if transaction.isNotificationEnabled == false {
+            try? removeNotification(for: transaction)
         }
     }
 }
