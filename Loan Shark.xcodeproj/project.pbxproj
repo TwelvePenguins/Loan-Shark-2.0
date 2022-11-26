@@ -543,7 +543,7 @@
 				DEVELOPMENT_TEAM = ZL64HBDS45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = MoneyRush;
+				INFOPLIST_KEY_CFBundleDisplayName = "Money Rush";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSContactsUsageDescription = "To import contacts for easier creation of transactions";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -577,7 +577,7 @@
 				DEVELOPMENT_TEAM = ZL64HBDS45;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = MoneyRush;
+				INFOPLIST_KEY_CFBundleDisplayName = "Money Rush";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_NSContactsUsageDescription = "To import contacts for easier creation of transactions";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
