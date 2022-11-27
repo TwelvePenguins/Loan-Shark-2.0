@@ -17,8 +17,6 @@
 		55EFC5FB292A5503002F8A2D /* PersonTransactionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5FA292A5502002F8A2D /* PersonTransactionRow.swift */; };
 		55EFC5FD292BC56C002F8A2D /* EditTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5FC292BC56C002F8A2D /* EditTransactionView.swift */; };
 		55EFC602292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC601292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift */; };
-		55EFC604292BC7EB002F8A2D /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */; };
-		55EFC605292BC7EB002F8A2D /* TransactionRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */; };
 		7480867A29231A190091C8A9 /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7480867929231A190091C8A9 /* TransactionDetailView.swift */; };
 		74BDE57C28CD868C00D1DA25 /* Loan_SharkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57B28CD868C00D1DA25 /* Loan_SharkApp.swift */; };
 		74BDE57E28CD868C00D1DA25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BDE57D28CD868C00D1DA25 /* ContentView.swift */; };
@@ -136,6 +134,7 @@
 				55DBFA17291377FB008AFA32 /* NewTransactionSheet.swift */,
 				74F9B076292489D2008087E9 /* PeopleSelectorView.swift */,
 				55EFC601292BC6BE002F8A2D /* MultiplePeopleSelectorView.swift */,
+				74DBC0552932374200588ABC /* DecimalTextField.swift */,
 			);
 			path = "New Transaction";
 			sourceTree = "<group>";
@@ -144,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				74FB4820290388CC00F23E32 /* HomeView.swift */,
-				74DBC0552932374200588ABC /* DecimalTextField.swift */,
 				55EFC5F8292A4080002F8A2D /* TransactionRowView.swift */,
 			);
 			path = HomeView;
@@ -386,7 +384,6 @@
 			files = (
 				74BDE58D28CD868E00D1DA25 /* Loan_SharkTests.swift in Sources */,
 				74FB4822290388CC00F23E32 /* HomeView.swift in Sources */,
-				55EFC604292BC7EB002F8A2D /* TransactionRowView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,7 +391,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55EFC605292BC7EB002F8A2D /* TransactionRowView.swift in Sources */,
 				74FB4823290388CC00F23E32 /* HomeView.swift in Sources */,
 				74BDE59928CD868E00D1DA25 /* Loan_SharkUITestsLaunchTests.swift in Sources */,
 				74BDE59728CD868E00D1DA25 /* Loan_SharkUITests.swift in Sources */,

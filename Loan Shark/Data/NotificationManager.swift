@@ -87,7 +87,6 @@ func addNotification(for transaction: Transaction) {
         var dateComponents = DateComponents()
         dateComponents.hour = 7
         
-        //            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents , repeats: true)
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: notificationFrequency, repeats: true)
         
         let request = UNNotificationRequest(identifier: transaction.id.uuidString, content: content, trigger: trigger)

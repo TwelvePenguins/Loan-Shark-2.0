@@ -20,10 +20,10 @@ struct TransactionRowView: View {
             HStack {
                 VStack (alignment: .leading) {
                     Text(transaction.name)
-                        .foregroundColor(Color("PrimaryTextColor"))
+                        .foregroundColor(transaction.transactionStatus == .paidOff ? .gray : Color("PrimaryTextColor"))
                     Text(findPeopleWhoNeverPay())
                         .font(.caption)
-                        .foregroundColor(Color("SecondaryTextColor"))
+                        .foregroundColor(transaction.transactionStatus == .paidOff ? .gray : Color("SecondaryTextColor"))
                 }
                 Spacer()
                 Text("$" + String(format: "%.2f", moneyCalculator()))
