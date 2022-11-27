@@ -111,14 +111,18 @@ struct NewTransactionSheet: View {
                                     .foregroundColor(Color("SecondaryTextColor"))
                             }
                         }
-                        
+                        let bindingMoney = Binding {
+                            people[0].money ?? 0
+                        } set: { newValue in
+                            people[0].money = newValue
+                        }
                         HStack {
                             Text("Amount")
                                 .foregroundColor(Color("PrimaryTextColor"))
                             Spacer()
                             Text("$")
                                 .foregroundColor(Color("SecondaryTextColor"))
-                            DecimalTextField(amount: $people[0].money, hint: "Amount")
+                            DecimalTextField(amount: bindingMoney, hint: "Amount")
                                 .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
                                 .frame(maxWidth: 70)
@@ -151,13 +155,18 @@ struct NewTransactionSheet: View {
                                                 .foregroundColor(Color("SecondaryTextColor"))
                                         }
                                     }
+                                    let bindingMoney = Binding {
+                                        person.money ?? 0
+                                    } set: { newValue in
+                                        person.money = newValue
+                                    }
                                     HStack {
                                         Text("Amount")
                                             .foregroundColor(Color("PrimaryTextColor"))
                                         Spacer()
                                         Text("$")
                                             .foregroundColor(Color("SecondaryTextColor"))
-                                        DecimalTextField(amount: $person.money, hint: "Amount")
+                                        DecimalTextField(amount: bindingMoney, hint: "Amount")
                                             .foregroundColor(Color("SecondaryTextColor"))
                                             .multilineTextAlignment(.trailing)
                                             .frame(maxWidth: 70)
@@ -253,7 +262,7 @@ struct NewTransactionSheet: View {
                             Spacer()
                             Text("$")
                                 .foregroundColor(Color("SecondaryTextColor"))
-                            DecimalTextField(amount: $people[0].money, hint: "Amount")
+                            DecimalTextField(amount: bindingMoney, hint: "Amount")
                                 .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
                                 .frame(maxWidth: 70)
@@ -262,7 +271,9 @@ struct NewTransactionSheet: View {
                         let bindingDate = Binding {
                             people[0].dueDate ?? .now
                         } set: { newValue in
-                            people[0].dueDate = newValue
+                            for peopleIndex in 0..<people.count {
+                                people[peopleIndex].dueDate = newValue
+                            }
                         }
                         DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                             .foregroundColor(Color("PrimaryTextColor"))
