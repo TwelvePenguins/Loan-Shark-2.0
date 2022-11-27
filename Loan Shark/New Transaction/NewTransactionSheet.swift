@@ -1,10 +1,12 @@
 //
+//
 //  NewTransactionSheet.swift
 //  Loan Shark
 //
 //  Created by Yuhan Du Du Du Du on 6/11/22.
 //
-// Duhan Du Du Du
+//
+//
 
 import SwiftUI
 
@@ -23,27 +25,30 @@ struct NewTransactionSheet: View {
     @State var dueDate = Date()
     @State var money = 0.0
     @State var transactionType = "Select"
+    @State var enableNotifs = false
     @Environment(\.dismiss) var dismiss
     
     var insufficientPeople: Bool {
         if transactionType == "Bill split" {
             return people.filter({ $0.contact != nil }).count < 2
-        } else if transactionType == "Loan "{
-            return people.filter({$0.contact != nil}).count < 2
         } else {
             return false
         }
     }
+    
     var blankMoney: Bool {
         return !people.filter { $0.contact != nil }.allSatisfy { $0.money != nil }
     }
+    
     var fieldsUnfilled: Bool {
         name.isEmpty || transactionType == "Select" || people.filter({ $0.contact != nil }).count < 1 || insufficientPeople || blankMoney
     }
+    
     var transactionTypes = ["Select", "Loan", "Bill split"]
+    
     @State var name = ""
     @State var people: [Person] = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
-    @State var enableNotifs = false
+    
     @Binding var transactions: [Transaction]
     
     var body: some View {
@@ -113,10 +118,9 @@ struct NewTransactionSheet: View {
                             Spacer()
                             Text("$")
                                 .foregroundColor(Color("SecondaryTextColor"))
-                            TextField("Amount", value: $people[0].money, formatter: decimalNumberFormat)
+                            DecimalTextField(amount: $people[0].money, hint: "Amount")
                                 .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
-                                .keyboardType(.decimalPad)
                                 .frame(maxWidth: 70)
                         }
                         
@@ -126,7 +130,7 @@ struct NewTransactionSheet: View {
                             people[0].dueDate = newValue
                         }
                         
-                        DatePicker("Due by", selection: bindingDate, displayedComponents: .date)
+                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                             .foregroundColor(Color("PrimaryTextColor"))
                         
                     } else if transactionType == "Bill split" && !isDetailSynchronised {
@@ -134,7 +138,6 @@ struct NewTransactionSheet: View {
                             let excludedContacts = people.compactMap({
                                 $0.contact
                             })
-                            
                             ForEach($people, id: \.name) { $person in
                                 Section(header: Text(person.name ?? "No contact selected")) {
                                     NavigationLink {
@@ -148,17 +151,15 @@ struct NewTransactionSheet: View {
                                                 .foregroundColor(Color("SecondaryTextColor"))
                                         }
                                     }
-                                    
                                     HStack {
                                         Text("Amount")
                                             .foregroundColor(Color("PrimaryTextColor"))
                                         Spacer()
                                         Text("$")
                                             .foregroundColor(Color("SecondaryTextColor"))
-                                        TextField("Amount", value: $person.money, formatter: decimalNumberFormat)
+                                        DecimalTextField(amount: $person.money, hint: "Amount")
                                             .foregroundColor(Color("SecondaryTextColor"))
                                             .multilineTextAlignment(.trailing)
-                                            .keyboardType(.decimalPad)
                                             .frame(maxWidth: 70)
                                     }
                                     
@@ -168,7 +169,7 @@ struct NewTransactionSheet: View {
                                         person.dueDate = newValue
                                     }
                                     
-                                    DatePicker("Due by", selection: BindingDate, displayedComponents: .date)
+                                    DatePicker("Due by", selection: BindingDate, in: Date.now..., displayedComponents: .date)
                                         .foregroundColor(Color("PrimaryTextColor"))
                                 }
                             }
@@ -252,10 +253,9 @@ struct NewTransactionSheet: View {
                             Spacer()
                             Text("$")
                                 .foregroundColor(Color("SecondaryTextColor"))
-                            TextField("Amount each", value: bindingMoney, formatter: decimalNumberFormat)
+                            DecimalTextField(amount: $people[0].money, hint: "Amount")
                                 .foregroundColor(Color("SecondaryTextColor"))
                                 .multilineTextAlignment(.trailing)
-                                .keyboardType(.decimalPad)
                                 .frame(maxWidth: 70)
                         }
                         
@@ -264,46 +264,61 @@ struct NewTransactionSheet: View {
                         } set: { newValue in
                             people[0].dueDate = newValue
                         }
-                        DatePicker("Due by", selection: bindingDate, displayedComponents: .date)
+                        DatePicker("Due by", selection: bindingDate, in: Date.now..., displayedComponents: .date)
                             .foregroundColor(Color("PrimaryTextColor"))
                     }
                 }
-                Button {
-                    let transactionTypeItem: TransactionTypes = {
-                        switch transactionType {
-                        case "Loan":
-                            return .loan
-                        case "Bill split":
-                            return isDetailSynchronised ? .billSplitSync : .billSplitNoSync
-                        default: return .unselected
+                HStack {
+                    Button {
+                        guard people.first?.money != nil else { return }
+                        let transactionTypeItem: TransactionTypes = {
+                            switch transactionType {
+                            case "Loan":
+                                return .loan
+                            case "Bill split":
+                                return isDetailSynchronised ? .billSplitSync : .billSplitNoSync
+                            default: return .unselected
+                            }
+                        }()
+                        let transaction = Transaction(name: name, people: people.filter({
+                            $0.contact != nil
+                        }), transactionType: transactionTypeItem)
+                        manageNotification(for: transaction)
+                        transactions.append(transaction)
+                        
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "square.and.arrow.up")
+                            Text("Save")
+                                .frame(height: 50)
                         }
-                    }()
-                    let transaction = Transaction(name: name,
-                                                  people: people.filter({
-                        $0.contact != nil
-                    }), transactionType: transactionTypeItem)
-                    
-                    if enableNotifs == true {
-                        transaction.isNotificationEnabled = true
-                        addNotification(for: transaction)
-                    } else if enableNotifs == false {
-                        transaction.isNotificationEnabled = false
-                    }
-                    
-                    transactions.append(transaction)
-                    
-                    dismiss()
-                } label: {
-                    Text("Save")
-                        .frame(height: 50)
                         .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
                         .background(Color("AccentColor"))
+                        .opacity(fieldsUnfilled ? 0.5 : 1)
                         .cornerRadius(10)
                         .foregroundColor(.white)
-                        .opacity(fieldsUnfilled ? 0.5 : 1)
+                    }
+                    .disabled(fieldsUnfilled)
+                    .padding(.leading, 20)
+                    
+                    Button(role: .cancel) {
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Image(systemName: "clear")
+                            Text("Cancel")
+                                .frame(height: 50)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                        .background(Color("RadRed"))
+                        .cornerRadius(10)
+                        .foregroundColor(.white)
+                    }
+                    .padding(.trailing, 20)
                 }
-                .disabled(fieldsUnfilled)
-                .padding(.horizontal)
             }
             .navigationTitle("New transaction")
             .onChange(of: transactionType) { newValue in
@@ -312,13 +327,14 @@ struct NewTransactionSheet: View {
             .onChange(of: isDetailSynchronised) { newValue in
                 people = [Person(contact: nil, money: 0, dueDate: .now, hasPaid: false)]
             }
+            .interactiveDismissDisabled()
         }
     }
     func manageNotification(for transaction: Transaction) {
         if transaction.isNotificationEnabled == true {
             addNotification(for: transaction)
         } else if transaction.isNotificationEnabled == false {
-            try? removeNotification(for: transaction)
+            removeNotification(for: transaction)
         }
     }
 }
